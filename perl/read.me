@@ -1,0 +1,96 @@
+CurrentCost publishing application
+
+This application reads data from the serial port of a currentcost meter, and
+publishes some of the data to a messaging system on the Internet so it can be
+graphed and viewed. The messaging system is the IBM MQ Telemetry Transport 
+(http://mqtt.org).
+
+Andy Stanford-Clark 2008
+
+
+
+initial setup for Linux
+-----------------------
+
+change set_serial to refer to your serial port (most likely /dev/ttyUSB0)
+
+change currentcost.pl 
+  your name (e.g. andy)
+  identify the serial port (as you put in set_serial)
+
+in broker.cfg
+  change the xxx on the first line to your initials (number of characters doesn't have to be 3!)
+  e.g. ASC_realtime
+  this is to uniquely identify your nanobroker to the broker on the internet
+
+
+
+Download RSMB (Really Small Message Broker) from the IBM AlphaWorks site
+http://alphaworks.ibm.com/tech/rsmb
+
+Follow the instructions included with RSMB to get it up and running.
+Note that you will have to chmod +x the appropriate broker executable for your platform, 
+so you can run it.
+
+Note that broker.redhat also works on other Intel platform linux distributions
+such as Debian and Ubuntu.
+
+*** copy the broker config file, broker.cfg, into the RSMB directory ***
+
+
+
+
+to start things running:
+
+start RSMB...
+
+./broker.redhat 
+
+(or whichever you are using)
+or to run it in the background:
+
+nohup ./broker.redhat >> /dev/null &
+
+
+start the currentcost application
+./start_cc
+
+
+To see the published data, subscribe (e.g. using the java MQTT gui client (IA92 supportpac, 
+linked from mqtt.org)) to PowerMeter/CC/yourname (where "yourname" is the name you set in currentcost.pl) to see the power data and PowerMeter/temp/yourname to see the temperature.
+
+
+
+Instructions for Windows
+------------------------
+
+You need perl on your machine - download free from http://activeperl.com
+
+The perl support for serial ports is somewhat broken on Windows, so we use
+a little C program, sread.exe to read the serial port, and then feed that
+data into the perl application.
+
+Modify win_currentcost.pl and broker.cfg as described above for linux, to put your own
+name into the two files.
+
+Download and install RSMB as described above, and in the RSMB documentation.
+
+*** copy broker.cfg into the RSMB directory ***
+
+Start RSMB in a command window with...
+
+broker
+
+In another command window start the currentcost bat file with...
+
+win_currentost 
+
+
+
+
+
+
+
+Any problems or questions to andysc: andysc@uk.ibm.com or @andysc on twitter.
+
+

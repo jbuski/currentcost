@@ -1,0 +1,4 @@
+stty speed 9600 < /dev/ttyUSB0
+stty -echo < /dev/ttyUSB0
+stty raw < /dev/ttyUSB0
+
