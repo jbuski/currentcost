@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Current Cost' target in the 'Current Cost' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
